@@ -7,6 +7,8 @@ export type Filters = {
     date?: Date; 
     dateSperator?: "before" | "after";
     action?: keyof typeof LogTypes
+    limit?: number;
+    page?: number
 }
 
 export class HistoryService extends PrismaService {
@@ -33,7 +35,9 @@ export class HistoryService extends PrismaService {
                     { action: filters.action },
                     { createdAt: filters.dateSperator === "before" ? { lte: filters.date } : { gte: filters.date } }
                 ]
-            }
+            },
+            take: filters.limit ? filters.limit : 50,
+            skip: filters.page ? (filters.page - 1) * filters.limit : 0
         })
     }
 }

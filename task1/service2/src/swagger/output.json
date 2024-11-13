@@ -70,6 +70,22 @@
                         "required": false,
                         "type": "string",
                         "example": "PRODUCT_CREATED"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 50
                     }
                 ],
                 "responses": {
