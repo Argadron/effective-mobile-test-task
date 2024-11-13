@@ -1,0 +1,270 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Service 1 API",
+        "description": "Documentation service 1",
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/products/create": {
+            "post": {
+                "description": "Create product",
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/defentions/ProductCreate"
+                        }
+                    }
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "New product instance"
+                    },
+                    "400": {
+                        "description": "Validation failed"
+                    },
+                    "404": {
+                        "description": "Shop not found!"
+                    }
+                }
+            }
+        },
+        "/products/search": {
+            "get": {
+                "description": "Search product by query",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "type": "string",
+                        "example": "Product",
+                        "required": false
+                    },
+                    {
+                        "name": "plu",
+                        "in": "query",
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1,
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product founded"
+                    },
+                    "400": {
+                        "description": "PLU or name must be writed!"
+                    }
+                }
+            }
+        },
+        "/remain/create": {
+            "post": {
+                "description": "Create remain",
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/defentions/RemainCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Remain created"
+                    },
+                    "400": {
+                        "description": "Validation failed"
+                    },
+                    "404": {
+                        "description": "Product or shop not found!"
+                    },
+                    "409": {
+                        "description": "Remain by this plu already exsists!"
+                    }
+                }
+            }
+        },
+        "/remain/increment": {
+            "put": {
+                "description": "Increment remain by PLU",
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/defentions/RemainIncrement"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PLU incremented"
+                    },
+                    "404": {
+                        "description": "Remain not found"
+                    }
+                }
+            }
+        },
+        "/remain/decrement": {
+            "put": {
+                "description": "Decrement remain by PLU",
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/defentions/RemainDecrement"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PLU decremented"
+                    },
+                    "404": {
+                        "description": "Remain not found"
+                    }
+                }
+            }
+        },
+        "/shop/create": {
+            "post": {
+                "description": "Create shop",
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/defentions/ShopCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shop created"
+                    },
+                    "400": {
+                        "description": "Validation failed"
+                    }
+                }
+            }
+        },
+        "/shop/list": {
+            "get": {
+                "description": "List all shops",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Shops getted"
+                    }
+                }
+            }
+        }
+    },
+    "defentions": {
+        "ProductCreate": {
+            "type": "object",
+            "properties": {
+                "quantity": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Product quantity",
+                    "example": 5
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Product name",
+                    "example": "Product"
+                },
+                "shopId": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Shop id",
+                    "example": 1
+                }
+            },
+            "required": ["shopId", "name", "quantity"]
+        },
+        "RemainCreate": {
+            "type": "object",
+            "properties": {
+                "shopId": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Shop id",
+                    "example": 1
+                },
+                "plu": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Product plu",
+                    "example": 1
+                },
+                "quantity": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Remain quantity",
+                    "example": 5
+                },
+                "type": {
+                    "type": "shelf | order",
+                    "description": "Remain type",
+                    "example": "shelf"
+                }
+            }
+        },
+        "RemainIncrement": {
+            "type": "object",
+            "properties": {
+                "plu": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Product plu",
+                    "example": 1
+                },
+                "quantity": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Quantity to increment remain",
+                    "example": 2
+                }
+            }
+        },
+        "RemainDecrement": {
+            "type": "object",
+            "properties": {
+                "plu": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Product plu",
+                    "example": 1
+                },
+                "quantity": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Quantity to decrement remain",
+                    "example": 2
+                }
+            }
+        },
+        "ShopCreate": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Shop name",
+                    "example": "My shop"
+                }
+            }
+        }
+    }
+}

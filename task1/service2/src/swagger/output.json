@@ -1,0 +1,107 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Service 2 API",
+        "description": "Documentation service 2",
+        "version": "1.0"
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "paths": {
+        "/log/create": {
+            "post": {
+                "description": "Create new log",
+                "parameters": [
+                    {
+                        "name": "Body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/defentions/CreateLog"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Log created"
+                    },
+                    "400": {
+                        "description": "Validation failed"
+                    }
+                }
+            }
+        },
+        "/log/search": {
+            "get": {
+                "description": "Search log by filters",
+                "parameters": [
+                    {
+                        "name": "shopId",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                    },
+                    {
+                        "name": "plu",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "required": false,
+                        "type": "date",
+                        "example": ""
+                    },
+                    {
+                        "name": "dateSperator",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "example": "after"
+                    },
+                    {
+                        "name": "action",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "example": "PRODUCT_CREATED"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Logs getted"
+                    }
+                }
+            }
+        }
+    },
+    "defentions": {
+        "CreateLog": {
+            "type": "object",
+            "properties": {
+                "shopId": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1,
+                    "description": "Shop id"
+                },
+                "plu": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1,
+                    "description": "Product PLU"
+                },
+                "action": {
+                    "type": "string",
+                    "example": "PRODUCT_CREATED",
+                    "description": "Action with product/remain"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "outDir": "dist",
+        "baseUrl": ".",
+        "module": "NodeNext",
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "moduleResolution": "NodeNext"
+    },
+    "ts-node": {
+        "esm": true,
+        "experimentalSpecifierResolution": "node"
+    }
+}

@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  plu Int @id @unique @default(autoincrement())
+
+  name String
+  quantity Int @default(0)
+
+  shopId Int @map("shop_id")
+  shop Shop @relation(fields: [shopId], references: [shopId])
+
+  remains Remains[]
+
+  @@map("product")
+}
+
+model Shop {
+  shopId Int @id @unique @default(autoincrement()) @map("shop_id")
+
+  shopName String @map("shop_name")
+
+  products Product[]
+  remains Remains[]
+
+  @@map("shop")
+}
+
+model Remains {
+  id Int @id @unique @default(autoincrement())
+
+  plu Int @unique
+  product Product @relation(fields: [plu], references: [plu])
+
+  shopId Int @map("shop_id")
+  shop Shop @relation(fields: [shopId], references: [shopId])
+
+  type RemainType 
+  quantity Int @default(1)
+
+  @@map("remains")
+}
+
+enum RemainType {
+  SHELF
+  ORDER
+}
