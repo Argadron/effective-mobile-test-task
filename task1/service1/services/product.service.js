@@ -1,7 +1,7 @@
 import { PrismaService } from '../prisma/prisma.service.js'
 import axios from 'axios'
 
-axios.defaults.baseURL = `http://localhost:5000/log/create`
+axios.defaults.baseURL = process.env.LOG_SERVER_URL ? `${process.env.LOG_SERVER_URL}/log/create` : `http://localhost:5000/log/create`
 axios.defaults.headers = {
     "Content-Type": "Application/Json"
 }
